@@ -17,7 +17,7 @@ git push origin main
 2. **Click "New +" → "Web Service"**
 3. **Connect GitHub repository:**
    - Select `spikebe49/bookledger`
-   - Choose `main` branch
+   - Choose `master` branch (not main)
 4. **Configure service:**
    - **Name:** `bookledger-backend`
    - **Environment:** `Production` (select this - Docker will be auto-detected)
@@ -104,6 +104,18 @@ To switch between development and production:
 2. Check that the `Dockerfile` exists in the root directory
 3. Try refreshing the page and starting over
 4. Make sure you're on the latest Render interface
+
+### **Build Issues:**
+
+**If you see Docker authorization errors:**
+- The Dockerfile has been updated to use Alpine Linux and download PocketBase directly
+- This avoids GitHub Container Registry authorization issues
+- If you still see errors, try redeploying the service
+
+**If you see "403 Forbidden" errors:**
+- This was a known issue with the previous Dockerfile
+- The new Dockerfile downloads PocketBase binary directly from GitHub releases
+- Redeploy your service to use the updated Dockerfile
 
 ### **Other Issues:**
 - **Deployment Issues:** Check Render logs in the dashboard
