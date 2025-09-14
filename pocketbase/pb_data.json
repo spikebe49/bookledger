@@ -1,0 +1,88 @@
+{
+  "categories": [
+    {
+      "id": "exp_office_supplies",
+      "name": "Office Supplies",
+      "type": "EXPENSE",
+      "color": "#FF5722",
+      "user_id": "admin"
+    },
+    {
+      "id": "exp_utilities",
+      "name": "Utilities",
+      "type": "EXPENSE",
+      "color": "#2196F3",
+      "user_id": "admin"
+    },
+    {
+      "id": "exp_rent",
+      "name": "Rent",
+      "type": "EXPENSE",
+      "color": "#9C27B0",
+      "user_id": "admin"
+    },
+    {
+      "id": "exp_marketing",
+      "name": "Marketing",
+      "type": "EXPENSE",
+      "color": "#FF9800",
+      "user_id": "admin"
+    },
+    {
+      "id": "exp_travel",
+      "name": "Travel",
+      "type": "EXPENSE",
+      "color": "#4CAF50",
+      "user_id": "admin"
+    },
+    {
+      "id": "exp_equipment",
+      "name": "Equipment",
+      "type": "EXPENSE",
+      "color": "#795548",
+      "user_id": "admin"
+    },
+    {
+      "id": "inc_book_sales",
+      "name": "Book Sales",
+      "type": "INCOME",
+      "color": "#4CAF50",
+      "user_id": "admin"
+    },
+    {
+      "id": "inc_consulting",
+      "name": "Consulting",
+      "type": "INCOME",
+      "color": "#2196F3",
+      "user_id": "admin"
+    },
+    {
+      "id": "inc_workshops",
+      "name": "Workshops",
+      "type": "INCOME",
+      "color": "#FF9800",
+      "user_id": "admin"
+    },
+    {
+      "id": "inc_royalties",
+      "name": "Royalties",
+      "type": "INCOME",
+      "color": "#9C27B0",
+      "user_id": "admin"
+    },
+    {
+      "id": "inc_speaking",
+      "name": "Speaking",
+      "type": "INCOME",
+      "color": "#FF5722",
+      "user_id": "admin"
+    },
+    {
+      "id": "inc_other",
+      "name": "Other Income",
+      "type": "INCOME",
+      "color": "#607D8B",
+      "user_id": "admin"
+    }
+  ]
+}

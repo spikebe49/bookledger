@@ -1,0 +1,179 @@
+# PocketBase Configuration
+# This file configures PocketBase for the BookLedger app
+
+# Server configuration
+server:
+  host: "127.0.0.1"
+  port: 8090
+  cors:
+    enabled: true
+    allowedOrigins: ["*"]
+
+# Database configuration
+database:
+  type: "sqlite"
+  path: "./data.db"
+
+# Admin configuration
+admin:
+  email: "admin@bookledger.com"
+  password: "admin123"
+
+# Collections configuration
+collections:
+  # Users collection (PocketBase built-in)
+  users:
+    schema:
+      - name: "name"
+        type: "text"
+        required: true
+      - name: "avatar"
+        type: "file"
+        options:
+          maxSelect: 1
+          maxSize: 5242880
+          mimeTypes: ["image/jpeg", "image/png", "image/gif", "image/webp"]
+  
+  # Books collection under user scope
+  books:
+    schema:
+      - name: "title"
+        type: "text"
+        required: true
+      - name: "description"
+        type: "text"
+      - name: "launchDate"
+        type: "date"
+        required: true
+      - name: "authorName"
+        type: "text"
+      - name: "authorEmail"
+        type: "email"
+      - name: "authorPhone"
+        type: "text"
+      - name: "authorWebsite"
+        type: "url"
+      - name: "publisherName"
+        type: "text"
+      - name: "publisherEmail"
+        type: "email"
+      - name: "publisherPhone"
+        type: "text"
+      - name: "publisherWebsite"
+        type: "url"
+      - name: "publisherAddress"
+        type: "text"
+      - name: "illustratorName"
+        type: "text"
+      - name: "illustratorEmail"
+        type: "email"
+      - name: "illustratorPhone"
+        type: "text"
+      - name: "illustratorWebsite"
+        type: "url"
+      - name: "isbn"
+        type: "text"
+      - name: "genre"
+        type: "text"
+      - name: "targetAudience"
+        type: "text"
+      - name: "pageCount"
+        type: "number"
+      - name: "language"
+        type: "text"
+      - name: "createdAt"
+        type: "date"
+        required: true
+      - name: "updatedAt"
+        type: "date"
+        required: true
+    options:
+      allowEmailAuth: true
+      allowOAuth2Auth: false
+      allowUsernameAuth: false
+      requireEmail: true
+  
+  # Expenses collection under user scope
+  expenses:
+    schema:
+      - name: "bookId"
+        type: "relation"
+        collectionId: "books"
+        required: true
+      - name: "category"
+        type: "text"
+        required: true
+      - name: "description"
+        type: "text"
+        required: true
+      - name: "amount"
+        type: "number"
+        required: true
+      - name: "date"
+        type: "date"
+        required: true
+    options:
+      allowEmailAuth: true
+      allowOAuth2Auth: false
+      allowUsernameAuth: false
+      requireEmail: true
+  
+  # Sales collection under user scope
+  sales:
+    schema:
+      - name: "bookId"
+        type: "relation"
+        collectionId: "books"
+        required: true
+      - name: "type"
+        type: "text"
+        required: true
+      - name: "bookTitle"
+        type: "text"
+        required: true
+      - name: "quantity"
+        type: "number"
+        required: true
+      - name: "unitPrice"
+        type: "number"
+        required: true
+      - name: "totalAmount"
+        type: "number"
+        required: true
+      - name: "donationAmount"
+        type: "number"
+      - name: "isGiveaway"
+        type: "bool"
+        required: true
+      - name: "date"
+        type: "date"
+        required: true
+    options:
+      allowEmailAuth: true
+      allowOAuth2Auth: false
+      allowUsernameAuth: false
+      requireEmail: true
+
+# Security rules
+rules:
+  # Users can only access their own data
+  books:
+    list: "@request.auth.id != ''"
+    view: "@request.auth.id != ''"
+    create: "@request.auth.id != ''"
+    update: "@request.auth.id != ''"
+    delete: "@request.auth.id != ''"
+  
+  expenses:
+    list: "@request.auth.id != ''"
+    view: "@request.auth.id != ''"
+    create: "@request.auth.id != ''"
+    update: "@request.auth.id != ''"
+    delete: "@request.auth.id != ''"
+  
+  sales:
+    list: "@request.auth.id != ''"
+    view: "@request.auth.id != ''"
+    create: "@request.auth.id != ''"
+    update: "@request.auth.id != ''"
+    delete: "@request.auth.id != ''"

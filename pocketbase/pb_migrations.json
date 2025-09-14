@@ -1,0 +1,90 @@
+{
+  "migrations": [
+    {
+      "id": "create_categories_table",
+      "name": "Create categories table",
+      "up": [
+        "CREATE TABLE categories (",
+        "  id TEXT PRIMARY KEY,",
+        "  name TEXT NOT NULL,",
+        "  type TEXT NOT NULL CHECK (type IN ('EXPENSE', 'INCOME')),",
+        "  color TEXT DEFAULT '#FF6200EE',",
+        "  user_id TEXT NOT NULL REFERENCES _pb_users_auth_(id) ON DELETE CASCADE,",
+        "  created TEXT DEFAULT (datetime('now')),",
+        "  updated TEXT DEFAULT (datetime('now'))",
+        ");",
+        "CREATE INDEX idx_categories_user_type ON categories (user_id, type);"
+      ],
+      "down": [
+        "DROP TABLE categories;"
+      ]
+    },
+    {
+      "id": "create_expenses_table",
+      "name": "Create expenses table",
+      "up": [
+        "CREATE TABLE expenses (",
+        "  id TEXT PRIMARY KEY,",
+        "  amount REAL NOT NULL CHECK (amount >= 0),",
+        "  description TEXT NOT NULL CHECK (length(description) >= 1 AND length(description) <= 255),",
+        "  category_id TEXT NOT NULL REFERENCES categories(id) ON DELETE RESTRICT,",
+        "  date TEXT NOT NULL,",
+        "  notes TEXT CHECK (length(notes) <= 1000),",
+        "  user_id TEXT NOT NULL REFERENCES _pb_users_auth_(id) ON DELETE CASCADE,",
+        "  created TEXT DEFAULT (datetime('now')),",
+        "  updated TEXT DEFAULT (datetime('now'))",
+        ");",
+        "CREATE INDEX idx_expenses_user_date ON expenses (user_id, date);",
+        "CREATE INDEX idx_expenses_category ON expenses (category_id);"
+      ],
+      "down": [
+        "DROP TABLE expenses;"
+      ]
+    },
+    {
+      "id": "create_sales_table",
+      "name": "Create sales table",
+      "up": [
+        "CREATE TABLE sales (",
+        "  id TEXT PRIMARY KEY,",
+        "  amount REAL NOT NULL CHECK (amount >= 0),",
+        "  description TEXT NOT NULL CHECK (length(description) >= 1 AND length(description) <= 255),",
+        "  category_id TEXT NOT NULL REFERENCES categories(id) ON DELETE RESTRICT,",
+        "  date TEXT NOT NULL,",
+        "  customer_name TEXT CHECK (length(customer_name) <= 100),",
+        "  notes TEXT CHECK (length(notes) <= 1000),",
+        "  user_id TEXT NOT NULL REFERENCES _pb_users_auth_(id) ON DELETE CASCADE,",
+        "  created TEXT DEFAULT (datetime('now')),",
+        "  updated TEXT DEFAULT (datetime('now'))",
+        ");",
+        "CREATE INDEX idx_sales_user_date ON sales (user_id, date);",
+        "CREATE INDEX idx_sales_category ON sales (category_id);"
+      ],
+      "down": [
+        "DROP TABLE sales;"
+      ]
+    },
+    {
+      "id": "insert_default_categories",
+      "name": "Insert default categories",
+      "up": [
+        "INSERT INTO categories (id, name, type, color, user_id) VALUES",
+        "  ('exp_office_supplies', 'Office Supplies', 'EXPENSE', '#FF5722', 'admin'),",
+        "  ('exp_utilities', 'Utilities', 'EXPENSE', '#2196F3', 'admin'),",
+        "  ('exp_rent', 'Rent', 'EXPENSE', '#9C27B0', 'admin'),",
+        "  ('exp_marketing', 'Marketing', 'EXPENSE', '#FF9800', 'admin'),",
+        "  ('exp_travel', 'Travel', 'EXPENSE', '#4CAF50', 'admin'),",
+        "  ('exp_equipment', 'Equipment', 'EXPENSE', '#795548', 'admin'),",
+        "  ('inc_book_sales', 'Book Sales', 'INCOME', '#4CAF50', 'admin'),",
+        "  ('inc_consulting', 'Consulting', 'INCOME', '#2196F3', 'admin'),",
+        "  ('inc_workshops', 'Workshops', 'INCOME', '#FF9800', 'admin'),",
+        "  ('inc_royalties', 'Royalties', 'INCOME', '#9C27B0', 'admin'),",
+        "  ('inc_speaking', 'Speaking', 'INCOME', '#FF5722', 'admin'),",
+        "  ('inc_other', 'Other Income', 'INCOME', '#607D8B', 'admin');"
+      ],
+      "down": [
+        "DELETE FROM categories WHERE user_id = 'admin';"
+      ]
+    }
+  ]
+}

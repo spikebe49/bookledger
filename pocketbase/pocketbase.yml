@@ -1,0 +1,91 @@
+# PocketBase configuration for BookLedger app
+# This file configures the PocketBase server settings
+
+# Server settings
+server:
+  http_addr: "127.0.0.1:8090"
+  https_addr: ""
+  cert_file: ""
+  key_file: ""
+
+# Database settings
+database:
+  type: "sqlite"
+  dsn: "./data/bookledger.db"
+
+# Admin settings
+admin:
+  email: "admin@bookledger.com"
+  password: "admin123"
+
+# Logging
+log:
+  level: "info"
+  format: "text"
+  output: "stdout"
+
+# Data directory
+data_dir: "./data"
+
+# Public files directory
+public_dir: "./pb_public"
+
+# Hooks directory
+hooks_dir: "./pocketbase"
+
+# Migrations directory
+migrations_dir: "./pocketbase"
+
+# Schema directory
+schema_dir: "./pocketbase"
+
+# Real-time settings
+realtime:
+  enabled: true
+  max_connections: 1000
+
+# CORS settings
+cors:
+  enabled: true
+  origins:
+    - "http://localhost:3000"
+    - "http://127.0.0.1:3000"
+    - "http://localhost:8080"
+    - "http://127.0.0.1:8080"
+    - "http://localhost:8090"
+    - "http://127.0.0.1:8090"
+
+# Security settings
+security:
+  secret_key: "your-secret-key-here-change-in-production"
+  token_duration: "24h"
+  password_min_length: 8
+  password_max_length: 100
+  password_require_uppercase: true
+  password_require_lowercase: true
+  password_require_numbers: true
+  password_require_special: true
+
+# Email settings (for password reset, etc.)
+email:
+  enabled: false
+  from_name: "BookLedger"
+  from_address: "noreply@bookledger.com"
+  smtp:
+    host: ""
+    port: 587
+    username: ""
+    password: ""
+    tls: true
+
+# File upload settings
+files:
+  max_upload_size: "10MB"
+  allowed_extensions: [".jpg", ".jpeg", ".png", ".gif", ".pdf", ".txt", ".csv"]
+
+# Backup settings
+backup:
+  enabled: true
+  cron: "0 2 * * *"  # Daily at 2 AM
+  max_keep: 7  # Keep last 7 backups
+  dir: "./backups"

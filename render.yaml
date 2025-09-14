@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: bookledger-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    region: oregon
+    branch: main
+    buildCommand: ""
+    startCommand: ""
+    envVars:
+      - key: POCKETBASE_ADMIN_EMAIL
+        value: admin@bookledger.com
+      - key: POCKETBASE_ADMIN_PASSWORD
+        value: ${POCKETBASE_ADMIN_PASSWORD}
+      - key: POCKETBASE_SECRET_KEY
+        value: ${POCKETBASE_SECRET_KEY}
+      - key: PORT
+        value: 8090
+    healthCheckPath: /api/health
+    autoDeploy: true
+    disk:
+      name: bookledger-data
+      mountPath: /app/data
+      sizeGB: 1
