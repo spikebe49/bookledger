@@ -1,18 +1,21 @@
-# Use Alpine Linux as base image
-FROM alpine:latest
+# Use Ubuntu as base image for better compatibility
+FROM ubuntu:22.04
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Install necessary packages
-RUN apk add --no-cache \
-    ca-certificates \
-    curl \
+RUN apt-get update && apt-get install -y \
+    wget \
     unzip \
-    && rm -rf /var/cache/apk/*
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Download PocketBase binary
-RUN curl -L https://github.com/pocketbase/pocketbase/releases/latest/download/pocketbase_linux_amd64.zip -o pocketbase.zip \
+# Download PocketBase binary using wget (more reliable than curl)
+RUN wget -O pocketbase.zip https://github.com/pocketbase/pocketbase/releases/download/v0.22.13/pocketbase_0.22.13_linux_amd64.zip \
     && unzip pocketbase.zip \
     && rm pocketbase.zip \
     && chmod +x pocketbase
@@ -30,7 +33,7 @@ EXPOSE 8090
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:8090/api/health || exit 1
+  CMD wget --quiet --tries=1 --spider http://localhost:8090/api/health || exit 1
 
 # Start PocketBase
 CMD ["./pocketbase", "serve", "--http=0.0.0.0:8090"]
